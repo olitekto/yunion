@@ -61,6 +61,7 @@ router.post('/sendInvitation', (req,res) => {
             <img style="border:3px solid #3ab3f9; border-radius:50px" width="90" height="90" alt="Yunion logo" src="https://api.yunion.ca/associations-logos/${assoc.logo}">
             <p style="color:#5e6061">Votre code est:</p>
                     <p> <strong style="color:#3ab3f9;font-weight:bold;font-size:30px">${codeInvite}</strong></p>
+                    <p style="color:#b8bfc5;font-size:13px">Copyright © 2023 Yunion Ltd.</p>
                     
                     </div>
                 `

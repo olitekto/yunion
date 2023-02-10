@@ -143,7 +143,7 @@ router.post('/registerMember', (req,res) => {
     <p style="color:#5e6061;margin-top:40px">Votre code OTP est:</p>
           <p> <strong style="color:#3ab3f9;font-weight:bold;font-size:30px">${random4Digits}</strong></p>
           <p style="color:#5e6061">Ne partagez ce code avec personne. Ce code est valide pour 5 minutes.</p>
-  <p style="color:#b8bfc5;font-size:13px">Copyright © 2022 Weblogy Ltd.</p>
+  <p style="color:#b8bfc5;font-size:13px">Copyright © 2023 Yunion Ltd.</p>
           </div>
       `
     };
