@@ -16,6 +16,9 @@ const associationsRoute = require('./routes/associations');
 app.use('/associations', associationsRoute);
 
 
+const paymentsRoute = require('./routes/payments');
+app.use('/payments', paymentsRoute);
+
 // routes
 
 
