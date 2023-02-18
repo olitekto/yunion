@@ -5,10 +5,36 @@ const moment = require('moment');
 const router = express.Router();
 
 const User = require('../models/User');
+const Payment = require('../models/Payment');
 
 const Flutterwave = require('flutterwave-node-v3');
 
+const fileUpload = require('express-fileupload')
+
+router.use(fileUpload())
+
 router.use(express.json());
+
+
+function calculateAge(birthDate, currentDate) {
+  const birthYear = birthDate.getFullYear();
+  const currentYear = currentDate.getFullYear();
+  let age = currentYear - birthYear;
+
+  const birthMonth = birthDate.getMonth();
+  const currentMonth = currentDate.getMonth();
+  if (currentMonth < birthMonth) {
+    age--;
+  } else if (currentMonth === birthMonth) {
+    const birthDay = birthDate.getDate();
+    const currentDay = currentDate.getDate();
+    if (currentDay < birthDay) {
+      age--;
+    }
+  }
+
+  return age;
+}
 
 // create a new user
 
@@ -36,7 +62,31 @@ router.post('/login', (req,res) => {
     } else {
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
         if(result) {
-          res.status(200).send(user[0]);
+
+          Payment.checkYearSubscription(user[0].id, "Yearly-subscription", (err, payment) => {
+            if (err) {
+              res.status(200).send(err);
+              return;
+            }
+            if (payment.length == 0 ) {     
+              const subscriptionObj = { statusSouscription: false, descSouscription: "Souscription impayée"};
+              res.status(200).send({...user[0],...subscriptionObj});
+              return
+            } 
+            // checking if date of subcription is not expired
+            const subscriptionDate = new Date(payment[0].date);
+            const currentDate = new Date();
+            const age = calculateAge(subscriptionDate, currentDate);
+            if (age > 1) {
+              const subscriptionObj = { statusSouscription: false, descSouscription: "Souscription expirée"};
+              res.status(200).send({...user[0],...subscriptionObj});
+              return
+            } 
+            const subscriptionObj ={ statusSouscription: true, descSouscription: "Souscription payée"};
+            res.status(200).send({...user[0],...subscriptionObj});
+          });
+
+          
         } else {
           res.status(200).send({ error: 5, desc: "Incorrect password"});
         }
@@ -62,6 +112,24 @@ router.post('/checkEmail', (req,res) => {
       console.log(user[0].id)
       res.status(200).send({id: user[0].id, email: user[0].email});
      });
+});
+
+router.post('/uploadFiles', (req,res) => {
+    const pp = req.files.photo;
+    const kyc = req.files.kyc;
+    pp.mv('./users-photos/'+'pp-'+req.body.id+'.png', function(err, result)  {
+      if (err) {
+        res.status(200).send(err);
+        return;
+      }
+    });
+    kyc.mv('./kyc-photos/'+'kyc-'+req.body.id+'.png', function(err, result)  {
+      if (err) {
+        res.status(200).send(err);
+        return;
+      }
+    });
+    res.status(200).send({ success: true , desc: "File uploaded successfully"});
 });
 
 router.post('/registerMember', (req,res) => {
