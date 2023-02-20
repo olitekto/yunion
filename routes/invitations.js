@@ -119,6 +119,12 @@ router.post('/fetchInvitation', (req,res) => {
             return;
         }
         if (invit.length > 0) {
+            //check if invitation not alreay used
+            if (invit[0].status != 0) {
+                res.status(200).send({ error: 4, desc: "Ce code d\'invitation a expiré"});
+                return
+            }
+
             // fetch association
             Association.fetchAssociation(invit[0].associationId, (err,assoc) => {
 
