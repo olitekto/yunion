@@ -62,7 +62,7 @@ class User {
           return;
         }
 
-        console.log('created user: ', { id: res.insertId, name: nom, email: prenom });
+        console.log('created user: ', { id: res.insertId, name: nom, email: email });
         result(null, { id: res.insertId, name: nom, email: email });
       }
     );
