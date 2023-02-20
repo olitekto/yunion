@@ -156,7 +156,7 @@ router.post('/registerMember', (req,res) => {
             //res.json({error:err});
             res.status(500).send({ error: err});
         }
-        User.create(req.body.nom, req.body.prenom, req.body.gender, birthdate, req.body.country, req.body.address, req.body.province,req.body.city, req.body.citizenshipStatus, req.body.phone1, req.body.phone2, req.body.relationshipParent, req.body.nameParent, req.body.phoneParent, req.body.photoProfil, req.body.photoID, deliveryDateID,expirationDateID, hash, req.body.email, req.body.associationId, req.body.roleUser, (err, user) => {
+        User.create(req.body.nom, req.body.prenom, req.body.gender, birthdate, req.body.country, req.body.address, req.body.province,req.body.city, req.body.citizenshipStatus, req.body.phone1, req.body.phone2, req.body.relationshipParent, req.body.nameParent, req.body.phoneParent, deliveryDateID,expirationDateID, hash, req.body.email, req.body.associationId, req.body.roleUser, (err, user) => {
           if (err) {
             console.log('error: ', err);
             res.status(200).send(err);

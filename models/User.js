@@ -51,10 +51,10 @@ class User {
    // connection.end();
   }
 
-  static create(nom, prenom, gender, birthdate, country, address, province, city,citizenshipStatus, phone1, phone2,relationshipParent, nameParent, phoneParent, photoProfil, photoID, deliveryDateID,expirationDateID, password, email, roleUser,associationId, result) {
+  static create(nom, prenom, gender, birthdate, country, address, province, city,citizenshipStatus, phone1, phone2,relationshipParent, nameParent, phoneParent, deliveryDateID,expirationDateID, password, email, roleUser,associationId, result) {
     connection.query(
-      `INSERT INTO users (nom, prenom, gender, birthdate, country, address, province, city,citizenshipStatus, phone1, phone2, relationshipParent, nameParent, phoneParent, photoProfil, photoID, deliveryDateID, expirationDateID, password, email, roleUser, associationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [nom, prenom, gender, birthdate, country, address, province, city,citizenshipStatus,phone1, phone2,relationshipParent, nameParent, phoneParent, photoProfil, photoID, deliveryDateID, expirationDateID, password, email, roleUser, associationId],
+      `INSERT INTO users (nom, prenom, gender, birthdate, country, address, province, city,citizenshipStatus, phone1, phone2, relationshipParent, nameParent, phoneParent, deliveryDateID, expirationDateID, password, email, roleUser, associationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [nom, prenom, gender, birthdate, country, address, province, city,citizenshipStatus,phone1, phone2,relationshipParent, nameParent, phoneParent, deliveryDateID, expirationDateID, password, email, roleUser, associationId],
       function(err, res) {
         if (err) {
           console.log('error: ', err);
