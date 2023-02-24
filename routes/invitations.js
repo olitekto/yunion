@@ -201,7 +201,7 @@ router.get('/association/:id', (req,res) => {
 
 // func update status invitation
 
-router.patch('/validateInvitation', (req,res) => {
+router.post('/validateInvitation', (req,res) => {
 
     Invitation.validateInvitation(req.body.invitationId, (err,invit) => {
 
