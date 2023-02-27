@@ -62,7 +62,7 @@ class User {
           return;
         }
 
-        connection.query('UPDATE invitations SET status = 1 WHERE id = ?', [invitationId], function (err, res) {
+        connection.query('UPDATE invitations SET status = 1 WHERE id = ?', [invitationId], function (err, res2) {
           if (err) {
             console.log('error: ', err);
             result(err, null);
