@@ -51,7 +51,7 @@ class User {
    // connection.end();
   }
 
-  static create(nom, prenom, gender, birthdate, country, address, province, city, zip, citizenshipStatus, phone1, phone2,relationshipParent, nameParent, phoneParent, deliveryDateID,expirationDateID, password, email, roleUser,associationId, result) {
+  static create(nom, prenom, gender, birthdate, country, address, province, city, zip, citizenshipStatus, phone1, phone2,relationshipParent, nameParent, phoneParent, deliveryDateID,expirationDateID, password, email, roleUser,associationId,invitationId, result) {
     connection.query(
       `INSERT INTO users (nom, prenom, gender, birthdate, country, address, province, city, zip, citizenshipStatus, phone1, phone2, relationshipParent, nameParent, phoneParent, deliveryDateID, expirationDateID, password, email, roleUser, associationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [nom, prenom, gender, birthdate, country, address, province, city, zip, citizenshipStatus,phone1, phone2,relationshipParent, nameParent, phoneParent, deliveryDateID, expirationDateID, password, email, roleUser, associationId],
@@ -62,8 +62,18 @@ class User {
           return;
         }
 
-        console.log('created user: ', { id: res.insertId, name: nom, email: email });
-        result(null, { id: res.insertId, name: nom, email: email });
+        connection.query('UPDATE invitations SET status = 1 WHERE id = ?', [invitationId], function (err, res) {
+          if (err) {
+            console.log('error: ', err);
+            result(err, null);
+            return;
+          }
+          //result(null, res);
+          console.log('created user: ', { id: res.insertId, name: nom, email: email });
+          result(null, { id: res.insertId, name: nom, email: email });
+        });
+
+        
       }
     );
   }
